@@ -1,0 +1,139 @@
+
+<button
+  class="chat-toggle"
+  type="button"
+  (click)="toggleChat()"
+  [attr.aria-label]="isOpen() ? 'Close chat' : 'Open chat'"
+>
+  {{ isOpen() ? '✕' : '💬' }}
+</button>
+
+@if (isOpen()) {
+  <div class="chat-window">
+    <div class="chat-header">
+      <div class="assistant-avatar">🍽️</div>
+
+      <div class="header-info">
+        <strong>Foodie AI</strong>
+        <span>✦ Your personal food assistant</span>
+      </div>
+
+      <button
+        class="close-button"
+        type="button"
+        (click)="toggleChat()"
+      >
+        ✕
+      </button>
+    </div>
+
+    <div class="chat-messages">
+      @for (item of messages(); track $index) {
+        <div
+          class="message-group"
+          [class.user-group]="item.role === 'user'"
+        >
+          @if (item.role === 'assistant') {
+            <div class="message-avatar">🍽️</div>
+          }
+
+          <div class="message-content">
+            @if (item.text) {
+              <div
+                class="message"
+                [class.user]="item.role === 'user'"
+              >
+                {{ item.text }}
+              </div>
+            }
+
+            @if (item.products?.length) {
+              <div class="recommended-products">
+                @for (product of item.products; track product.id) {
+                  <div class="product-card">
+                    @if (getImage(product)) {
+                      <img
+                        class="product-image"
+                        [src]="getImage(product)"
+                        [alt]="product.name"
+                        loading="lazy"
+                      />
+                    } @else {
+                      <div class="image-placeholder">🍽️</div>
+                    }
+
+                    <div class="product-info">
+                      <h4>{{ product.name }}</h4>
+
+                      <div class="product-meta">
+                        <span class="product-price">
+                          ${{ product.price }}
+                        </span>
+
+                        <span class="product-rating">
+                          ⭐ {{ product.rate }}
+                        </span>
+                      </div>
+
+                      @if (isVegetarian(product)) {
+                        <span class="vegetarian-badge">
+                          🌱 Vegetarian
+                        </span>
+                      }
+
+                      <button
+                        class="details-button"
+                        type="button"
+                        (click)="openProduct(product.id)"
+                      >
+                        View Details
+                        <span>→</span>
+                      </button>
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      @if (loading()) {
+        <div class="message-group">
+          <div class="message-avatar">🍽️</div>
+
+          <div class="typing-indicator">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="chat-footer">
+      <div class="chat-input">
+        <input
+          type="text"
+          placeholder="Ask Foodie AI anything..."
+          [ngModel]="message()"
+          (ngModelChange)="message.set($event)"
+          (keydown.enter)="sendMessage()"
+          [disabled]="loading()"
+        />
+
+        <button
+          type="button"
+          (click)="sendMessage()"
+          [disabled]="loading() || !message().trim()"
+        >
+          ➤
+        </button>
+      </div>
+
+      <div class="powered-by">
+        Powered by Groq AI
+      </div>
+    </div>
+  </div>
+}

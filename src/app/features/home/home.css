@@ -1,0 +1,304 @@
+.hero {
+  height: 550px;
+  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url("https://restaurant.stepacademy.ge/restaurant-food-spread.png") center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+}
+.hero .hero-content {
+  padding: 20px;
+}
+.hero h1 {
+  font-family: Arial, sans-serif;
+  font-size: 54px;
+  font-weight: 700;
+  margin: 0 0 14px;
+}
+.hero p {
+  font-family: Arial, sans-serif;
+  font-size: 21px;
+  margin: 0 0 32px;
+}
+.hero .order-btn {
+  display: inline-block;
+  background: #ff6b35;
+  color: white;
+  padding: 14px 30px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 16px;
+}
+.hero .order-btn:hover {
+  background: #eb5726;
+}
+
+.popular {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 48px 20px 64px;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+.popular h2 {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 30px;
+}
+.popular .message {
+  text-align: center;
+}
+.popular .products {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.popular .product-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 438px;
+  box-sizing: border-box;
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.popular .product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.13);
+}
+.popular .product-image {
+  width: 100%;
+  height: 180px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.popular .product-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.popular .product-info {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.popular .product-info h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 8px 0 10px;
+}
+.popular .product-info .description {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #666;
+  margin: 0 0 8px;
+}
+.popular .product-info .rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+.popular .product-info .rating svg {
+  width: 16px;
+  height: 16px;
+  fill: #f7931e;
+  stroke: #f7931e;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+.popular .product-info .rating span {
+  font-size: 13px;
+  font-weight: 500;
+  color: #111;
+}
+.popular .product-info .price {
+  color: #ff6b35;
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+}
+.popular .product-info .card-footer {
+  margin-top: auto;
+  padding-top: 16px;
+}
+.popular .product-info .cart-btn {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  background: #ff6b35;
+  color: white;
+  text-align: center;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.popular .product-info .cart-btn:hover {
+  background: #eb5726;
+}
+
+.our-story {
+  background: #f9fafb;
+  padding: 64px 20px;
+  font-family: Arial, sans-serif;
+}
+.our-story .story-container {
+  max-width: 1480px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 48px;
+}
+.our-story .story-image img {
+  display: block;
+  width: 100%;
+  height: 400px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 8px;
+}
+.our-story .story-content h2 {
+  font-size: 30px;
+  font-weight: 700;
+  margin: 0 0 20px;
+}
+.our-story .story-content p {
+  color: #666;
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0 0 20px;
+}
+.our-story .story-content .story-btn {
+  display: inline-block;
+  background: #ff6b35;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  margin-top: 6px;
+  transition: background 0.2s ease;
+}
+.our-story .story-content .story-btn:hover {
+  background: #eb5726;
+}
+
+.welcome-toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 335px;
+  max-width: calc(100% - 32px);
+  padding: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  box-sizing: border-box;
+  background: white;
+  border: 1px solid #eeeeee;
+  border-radius: 9px;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.12);
+  font-family: Arial, sans-serif;
+  z-index: 1000;
+}
+
+.welcome-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #222;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3px;
+}
+
+.welcome-content {
+  flex: 1;
+}
+.welcome-content strong {
+  display: block;
+  font-size: 13px;
+  color: #222;
+  margin-bottom: 5px;
+}
+.welcome-content p {
+  margin: 0;
+  font-size: 12px;
+  color: #555;
+  line-height: 1.5;
+}
+
+.welcome-close {
+  position: absolute;
+  top: -9px;
+  left: -9px;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #e5e5e5;
+  border-radius: 50%;
+  background: white;
+  color: #555;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    height: 450px;
+  }
+  .hero h1 {
+    font-size: 36px;
+  }
+  .popular .products {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 768px) {
+  .our-story .story-container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+@media (max-width: 600px) {
+  .hero h1 {
+    font-size: 28px;
+  }
+  .hero p {
+    font-size: 16px;
+  }
+  .popular .products {
+    grid-template-columns: 1fr;
+  }
+  .our-story {
+    padding: 48px 20px;
+  }
+  .our-story .story-image img {
+    height: 280px;
+  }
+  .welcome-toast {
+    width: 335px;
+  }
+}/*# sourceMappingURL=home.css.map */

@@ -1,0 +1,305 @@
+
+@if (addedMessage()) {
+  <div class="menu-toast">
+    <div class="toast-icon">✓</div>
+
+    <div class="toast-content">
+      <strong>Added to cart</strong>
+      <p>Product has been added to your cart</p>
+    </div>
+
+    <button
+      type="button"
+      class="toast-close"
+      (click)="closeAddedMessage()"
+      aria-label="Close notification"
+    >
+      ×
+    </button>
+  </div>
+}
+
+<section class="menu-page">
+  <div class="menu-container">
+    <button
+      type="button"
+      class="mobile-filter-button"
+      (click)="toggleMobileFilters()"
+    >
+      Filters {{ mobileFiltersOpen() ? '−' : '+' }}
+    </button>
+
+    <div class="menu-layout">
+      <aside
+        class="filters"
+        [class.filters-open]="mobileFiltersOpen()"
+      >
+        <h2>Filters</h2>
+
+        <div class="filter-group">
+          <label for="menu-search">Search</label>
+
+          <input
+            id="menu-search"
+            type="search"
+            placeholder="Search dishes..."
+            [value]="search()"
+            (input)="onSearch($any($event.target).value)"
+          />
+        </div>
+
+        <div class="filter-group">
+          <span class="filter-label">Categories</span>
+
+          <div class="categories">
+            @for (category of categories(); track category.id) {
+              <label class="category-option">
+                <input
+                  type="checkbox"
+                  [checked]="isCategorySelected(category.id)"
+                  (change)="toggleCategory(category.id)"
+                />
+                <span>{{ category.name }}</span>
+              </label>
+            }
+          </div>
+        </div>
+
+        <div class="filter-group vegetarian-group">
+          <span>Vegetarian Only</span>
+
+          <button
+            type="button"
+            class="toggle-switch"
+            role="switch"
+            aria-label="Vegetarian Only"
+            [attr.aria-checked]="vegetarianOnly()"
+            [class.active]="vegetarianOnly()"
+            (click)="toggleVegetarian()"
+          >
+            <span></span>
+          </button>
+        </div>
+
+        <div class="filter-group range-group">
+          <label for="menu-spiciness">Spiciness (0-5)</label>
+
+          <input
+            id="menu-spiciness"
+            type="range"
+            min="0"
+            max="5"
+            step="1"
+            [value]="spiciness()"
+            [style.background]="'linear-gradient(to right, #ff6b35 0%, #ff6b35 ' + (spiciness() / 5 * 100) + '%, #f1f1f1 ' + (spiciness() / 5 * 100) + '%, #f1f1f1 100%)'"
+            (input)="setSpiciness(+$any($event.target).value)"
+          />
+
+          <p>
+            Level:
+            {{ spiciness() === 0 ? 'not selected' : spiciness() }}
+          </p>
+        </div>
+
+        <div class="filter-group range-group">
+          <label for="menu-rating">Minimum Rating</label>
+
+          <input
+            id="menu-rating"
+            type="range"
+            min="0"
+            max="5"
+            step="0.5"
+            [value]="rating()"
+            [style.background]="'linear-gradient(to right, #ff6b35 0%, #ff6b35 ' + (rating() / 5 * 100) + '%, #f1f1f1 ' + (rating() / 5 * 100) + '%, #f1f1f1 100%)'"
+            (input)="setRating(+$any($event.target).value)"
+          />
+
+          <div class="range-value">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="#F7931E"
+              stroke="#F7931E"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.163.75a.53.53 0 0 1 .294.904l-3.736 3.641a2.12 2.12 0 0 0-.61 1.878l.882 5.14a.53.53 0 0 1-.769.558L12.98 18.57a2.12 2.12 0 0 0-1.973 0l-4.618 2.428a.53.53 0 0 1-.769-.558l.882-5.14a2.12 2.12 0 0 0-.61-1.878L2.156 9.788a.53.53 0 0 1 .294-.904l5.163-.75a2.12 2.12 0 0 0 1.595-1.16z"/>
+            </svg>
+
+            <span>{{ rating().toFixed(1) }}+</span>
+          </div>
+        </div>
+
+        <div class="filter-group range-group">
+          <label for="menu-min-price">Min price</label>
+
+          <input
+            id="menu-min-price"
+            type="range"
+            min="0"
+            max="500"
+            step="1"
+            [value]="minPrice()"
+            [style.background]="'linear-gradient(to right, #ff6b35 0%, #ff6b35 ' + (minPrice() / 500 * 100) + '%, #f1f1f1 ' + (minPrice() / 500 * 100) + '%, #f1f1f1 100%)'"
+            (input)="setMinPrice(+$any($event.target).value)"
+          />
+
+          <p>$ {{ minPrice() }}+</p>
+        </div>
+
+        <div class="filter-group range-group">
+          <label for="menu-max-price">Max price</label>
+
+          <input
+            id="menu-max-price"
+            type="range"
+            min="0"
+            max="500"
+            step="1"
+            [value]="maxPrice()"
+            [style.background]="'linear-gradient(to right, #ff6b35 0%, #ff6b35 ' + (maxPrice() / 500 * 100) + '%, #f1f1f1 ' + (maxPrice() / 500 * 100) + '%, #f1f1f1 100%)'"
+            (input)="setMaxPrice(+$any($event.target).value)"
+          />
+
+          <p>$ {{ maxPrice() === 500 ? '500+' : maxPrice() + '+' }}</p>
+        </div>
+
+        <button
+          type="button"
+          class="clear-button"
+          (click)="resetFilters()"
+        >
+          Clear All Filters
+        </button>
+      </aside>
+
+      <main class="products-section">
+        <div class="menu-heading">
+          <h1>Menu</h1>
+          <p>Showing {{ showingCount() }} products</p>
+        </div>
+
+        @if (actionError()) {
+          <p class="action-error">{{ actionError() }}</p>
+        }
+
+        @if (loading()) {
+          <div class="status-message">
+            Loading products...
+          </div>
+        } @else if (error()) {
+          <div class="status-message">
+            <p>{{ error() }}</p>
+            <button type="button" (click)="loadProducts()">
+              Try Again
+            </button>
+          </div>
+        } @else {
+          <div class="products-grid">
+            @for (product of products(); track product.id) {
+              <article
+                class="product-card"
+                role="link"
+                tabindex="0"
+                [attr.aria-label]="'View details for ' + product.name"
+                (click)="openProduct(product.id)"
+                (keydown.enter)="openProduct(product.id)"
+                (keydown.space)="$event.preventDefault(); openProduct(product.id)"
+              >
+                <div class="product-image">
+                  <img
+                    [src]="product.image"
+                    [alt]="product.name"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="product-info">
+                  <h3>{{ product.name }}</h3>
+
+                  <p class="description">
+                    {{ product.description }}
+                  </p>
+
+                  <div class="rating">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="#F7931E"
+                      stroke="#F7931E"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.163.75a.53.53 0 0 1 .294.904l-3.736 3.641a2.12 2.12 0 0 0-.61 1.878l.882 5.14a.53.53 0 0 1-.769.558L12.98 18.57a2.12 2.12 0 0 0-1.973 0l-4.618 2.428a.53.53 0 0 1-.769-.558l.882-5.14a2.12 2.12 0 0 0-.61-1.878L2.156 9.788a.53.53 0 0 1 .294-.904l5.163-.75a2.12 2.12 0 0 0 1.595-1.16z"/>
+                    </svg>
+
+                    <span>{{ product.rate.toFixed(1) }}</span>
+                  </div>
+
+                  <p class="price">
+                    ${{ product.price.toFixed(2) }}
+                  </p>
+
+                  <div class="card-footer">
+                    <button
+                      type="button"
+                      class="cart-btn"
+                      [disabled]="addingProductId() !== null"
+                      (click)="addToCart(product.id, $event)"
+                    >
+                      {{
+                        addingProductId() === product.id
+                          ? 'Adding...'
+                          : 'Add to Cart'
+                      }}
+                    </button>
+                  </div>
+                </div>
+              </article>
+            } @empty {
+              <div class="empty-products">
+                <h3>No products found</h3>
+                <p>Try changing your filters.</p>
+
+                <button type="button" (click)="resetFilters()">
+                  Clear All Filters
+                </button>
+              </div>
+            }
+          </div>
+
+          @if (page() > 1 || hasMore()) {
+            <div class="pagination">
+              <button
+                type="button"
+                [disabled]="page() === 1"
+                (click)="previousPage()"
+              >
+                Previous
+              </button>
+
+              <span>Page {{ page() }}</span>
+
+              <button
+                type="button"
+                [disabled]="!hasMore()"
+                (click)="nextPage()"
+              >
+                Next
+              </button>
+            </div>
+          }
+        }
+      </main>
+    </div>
+  </div>
+</section>

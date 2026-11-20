@@ -1,0 +1,145 @@
+
+@if (errorMessage()) {
+  <div class="error-toast" role="alert">
+    <div class="toast-icon">!</div>
+
+    <div class="toast-content">
+      <strong>Validation Error</strong>
+      <p>{{ errorMessage() }}</p>
+    </div>
+
+    <button
+      type="button"
+      class="toast-close"
+      (click)="closeToast()"
+      aria-label="Close notification"
+    >
+      ×
+    </button>
+  </div>
+}
+
+<section class="login-page">
+  <div class="login-card">
+    <h1>Welcome Back</h1>
+    <p class="subtitle">Sign in to your account</p>
+
+    <form novalidate (submit)="login($event)">
+      <div class="field">
+        <label for="email">Email</label>
+
+        <input
+          id="email"
+          type="email"
+          [formField]="loginForm.email"
+          placeholder="you@example.com"
+          autocomplete="email"
+          [class.invalid]="submitted() && loginForm.email().invalid()"
+        >
+
+        @if (submitted() && loginForm.email().invalid()) {
+          <p class="field-error">
+            @if (!loginModel().email.trim()) {
+              Email is required
+            } @else {
+              Please enter a valid email address
+            }
+          </p>
+        }
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+
+        <div class="password-field">
+          <input
+            id="password"
+            [type]="showPassword() ? 'text' : 'password'"
+            [formField]="loginForm.password"
+            placeholder="••••••••"
+            autocomplete="current-password"
+            [class.invalid]="submitted() && loginForm.password().invalid()"
+          >
+
+          <button
+            type="button"
+            class="eye-btn"
+            (click)="togglePassword()"
+            [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+          >
+            @if (showPassword()) {
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-5 0-9-4-10-8a16.7 16.7 0 0 1 4.06-5.94"></path>
+                <path d="M9.9 4.24A10.94 10.94 0 0 1 12 4c5 0 9 4 10 8a15.4 15.4 0 0 1-2.17 3.19"></path>
+                <path d="M14.12 14.12a3 3 0 0 1-4.24-4.24"></path>
+                <path d="M1 1l22 22"></path>
+              </svg>
+            } @else {
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            }
+          </button>
+        </div>
+
+        @if (submitted() && loginForm.password().invalid()) {
+          <p class="field-error">Password is required</p>
+        }
+      </div>
+
+      <div class="login-options">
+        <label class="remember-me">
+          <input
+            type="checkbox"
+            [formField]="loginForm.rememberMe"
+          >
+          Remember me
+        </label>
+
+        <a
+          href="#"
+          class="forgot-link"
+          (click)="$event.preventDefault()"
+        >
+          Forgot password?
+        </a>
+      </div>
+
+      <button
+        type="submit"
+        class="login-btn"
+        [disabled]="loading()"
+      >
+        {{ loading() ? 'Signing In...' : 'Sign In' }}
+      </button>
+    </form>
+
+    <div class="signup-text">
+      <span>or</span>
+
+      <p>
+        Don't have an account?
+        <a routerLink="/register">Sign up</a>
+      </p>
+    </div>
+  </div>
+</section>

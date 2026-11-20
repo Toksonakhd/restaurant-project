@@ -1,0 +1,168 @@
+
+<div class="cart-page">
+  @if (successMessage()) {
+    <div class="checkout-toast">
+      <button
+        type="button"
+        class="toast-close"
+        (click)="closeSuccessMessage()"
+        aria-label="Close notification"
+      >
+        ×
+      </button>
+
+      <div class="toast-content">
+        <span class="toast-icon">✓</span>
+
+        <div>
+          <strong>Thank you for your purchase!</strong>
+          <p>Your order has been placed and is being processed.</p>
+        </div>
+      </div>
+    </div>
+  }
+
+  <div class="cart-container">
+    @if (cartService.loading()) {
+      <p class="cart-status">Loading cart...</p>
+    } @else if (cartService.error()) {
+      <p class="cart-status">{{ cartService.error() }}</p>
+    } @else if (cartService.items().length === 0) {
+      <div class="empty-cart">
+        <svg
+          class="empty-cart-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="80"
+          height="80"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.9"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M5 8h14l1 12H4L5 8Z"></path>
+          <path d="M5 8 8 3h8l3 5"></path>
+          <path d="M9 12a3 3 0 0 0 6 0"></path>
+        </svg>
+
+        <h2>Your cart is empty</h2>
+        <p>Looks like you haven't added anything to your cart yet</p>
+
+        <a routerLink="/menu">Browse Menu</a>
+      </div>
+    } @else {
+      <div class="cart-heading">
+        <h1>Shopping Cart</h1>
+        <p>{{ cartService.totalItems() }} items</p>
+      </div>
+
+      @if (actionError()) {
+        <p class="cart-status">{{ actionError() }}</p>
+      }
+
+      <div class="cart-layout">
+        <div class="cart-items">
+          @for (item of cartService.items(); track item.id) {
+            <div class="cart-item">
+              <img
+                class="cart-item-image"
+                [src]="item.product.image"
+                [alt]="item.product.name"
+              >
+
+              <div class="cart-item-details">
+                <h3>{{ item.product.name }}</h3>
+                <p>{{ item.product.description }}</p>
+
+                <div class="cart-quantity">
+                  <button
+                    type="button"
+                    [disabled]="cartService.updating() || item.quantity <= 1"
+                    (click)="decreaseQuantity(item)"
+                  >
+                    −
+                  </button>
+
+                  <span>{{ item.quantity }}</span>
+
+                  <button
+                    type="button"
+                    [disabled]="cartService.updating()"
+                    (click)="increaseQuantity(item)"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+
+              <div class="cart-item-actions">
+                <button
+                  type="button"
+                  class="remove-button"
+                  [disabled]="cartService.updating()"
+                  [attr.aria-label]="'Remove ' + item.product.name"
+                  (click)="removeItem(item)"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="19"
+                    height="19"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M3 6h18"></path>
+                    <path d="M8 6V4h8v2"></path>
+                    <path d="M19 6l-1 14H6L5 6"></path>
+                    <path d="M10 10v7"></path>
+                    <path d="M14 10v7"></path>
+                  </svg>
+                </button>
+
+                <div class="cart-item-price">
+                  <span>${{ item.product.price.toFixed(2) }} each</span>
+                  <strong>
+                    ${{ (item.product.price * item.quantity).toFixed(2) }}
+                  </strong>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+
+        <div class="order-summary">
+          <h2>Order Summary</h2>
+
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span>${{ subtotal().toFixed(2) }}</span>
+          </div>
+
+          <div class="summary-row">
+            <span>Tax (10%)</span>
+            <span>${{ tax().toFixed(2) }}</span>
+          </div>
+
+          <div class="summary-row summary-total">
+            <strong>Total</strong>
+            <strong>${{ total().toFixed(2) }}</strong>
+          </div>
+
+          <button
+            type="button"
+            class="checkout-button"
+            [disabled]="cartService.updating()"
+            (click)="checkout()"
+          >
+            {{ cartService.updating() ? 'Processing...' : 'Proceed to Checkout' }}
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</div>

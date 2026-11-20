@@ -1,0 +1,322 @@
+
+@if (toast(); as notification) {
+  <div
+    class="toast-notification"
+    [class.toast-error]="notification.type === 'error'"
+    role="status"
+    aria-live="polite">
+
+    <button
+      type="button"
+      class="toast-close"
+      aria-label="Close notification"
+      (click)="closeToast()">
+      ×
+    </button>
+
+    <div class="toast-content">
+      <div class="toast-icon">
+        @if (notification.type === 'success') {
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
+            <path
+              d="m7.5 12 3 3 6-6"
+              stroke="#fff"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+            </path>
+          </svg>
+        } @else {
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
+            <path
+              d="M12 7v6M12 17h.01"
+              stroke="#fff"
+              stroke-width="2"
+              stroke-linecap="round">
+            </path>
+          </svg>
+        }
+      </div>
+
+      <div class="toast-text">
+        <strong>{{ notification.title }}</strong>
+        <p>{{ notification.message }}</p>
+      </div>
+    </div>
+  </div>
+}
+
+<section class="profile-page">
+  <div class="profile-container">
+    <h1>Profile Settings</h1>
+
+    <div class="profile-tabs">
+      <button
+        type="button"
+        [class.active]="activeTab() === 'personal'"
+        (click)="setTab('personal')">
+        Personal Info
+      </button>
+
+      <button
+        type="button"
+        [class.active]="activeTab() === 'password'"
+        (click)="setTab('password')">
+        Change Password
+      </button>
+
+      <button
+        type="button"
+        [class.active]="activeTab() === 'account'"
+        (click)="setTab('account')">
+        Account Settings
+      </button>
+    </div>
+
+    @if (activeTab() === 'personal') {
+      <div class="profile-card">
+        <h2>Personal Information</h2>
+        <p class="subtitle">Update your personal details</p>
+
+        @if (loading()) {
+          <div class="loading">Loading profile...</div>
+        } @else if (profile()) {
+          <form (ngSubmit)="saveProfile()">
+            <div class="avatar-container">
+              @if (picture()) {
+                <img [src]="picture()" alt="Profile picture" class="avatar-image">
+              } @else {
+                <div class="avatar-placeholder">
+                  <svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="8" r="4"></circle>
+                    <path d="M4 21a8 8 0 0 1 16 0"></path>
+                  </svg>
+                </div>
+              }
+            </div>
+
+            <div class="form-group">
+              <label for="picture">Picture</label>
+              <input
+                id="picture"
+                name="picture"
+                type="url"
+                placeholder="Profile picture URL"
+                [ngModel]="picture()"
+                (ngModelChange)="picture.set($event)">
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input
+                  id="firstName"
+                  name="firstName"
+                  type="text"
+                  required
+                  [ngModel]="firstName()"
+                  (ngModelChange)="firstName.set($event)">
+              </div>
+
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input
+                  id="lastName"
+                  name="lastName"
+                  type="text"
+                  required
+                  [ngModel]="lastName()"
+                  (ngModelChange)="lastName.set($event)">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                id="email"
+                type="email"
+                [value]="email()"
+                disabled>
+            </div>
+
+            <div class="form-group">
+              <label for="phoneNumber">Phone Number</label>
+              <input
+                id="phoneNumber"
+                name="phoneNumber"
+                type="tel"
+                placeholder="Enter your phone number"
+                [ngModel]="phoneNumber()"
+                (ngModelChange)="phoneNumber.set($event)">
+            </div>
+
+            <div class="form-group">
+              <label for="address">Address</label>
+              <textarea
+                id="address"
+                name="address"
+                rows="3"
+                placeholder="Enter your address"
+                [ngModel]="address()"
+                (ngModelChange)="address.set($event)">
+              </textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="age">Age</label>
+              <input
+                id="age"
+                name="age"
+                type="number"
+                min="0"
+                max="120"
+                placeholder="Enter your age"
+                [ngModel]="age()"
+                (ngModelChange)="age.set($event)">
+            </div>
+
+            <button class="primary-button" type="submit" [disabled]="saving()">
+              {{ saving() ? 'Saving...' : 'Save Changes' }}
+            </button>
+          </form>
+        }
+      </div>
+    }
+
+    @if (activeTab() === 'password') {
+      <div class="profile-card">
+        <h2>Change Password</h2>
+        <p class="subtitle">Update your password</p>
+
+        <form (ngSubmit)="updatePassword()">
+          <div class="form-group">
+            <label for="oldPassword">Current Password</label>
+            <div class="password-field">
+              <input
+                id="oldPassword"
+                name="oldPassword"
+                [type]="showOldPassword() ? 'text' : 'password'"
+                required
+                autocomplete="current-password"
+                [ngModel]="oldPassword()"
+                (ngModelChange)="oldPassword.set($event)">
+              <button
+                type="button"
+                class="visibility-button"
+                [attr.aria-label]="showOldPassword() ? 'Hide password' : 'Show password'"
+                (click)="showOldPassword.set(!showOldPassword())">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                  @if (showOldPassword()) {
+                    <path d="M3 3l18 18"></path>
+                  }
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="newPassword">New Password</label>
+            <div class="password-field">
+              <input
+                id="newPassword"
+                name="newPassword"
+                [type]="showNewPassword() ? 'text' : 'password'"
+                required
+                autocomplete="new-password"
+                [ngModel]="newPassword()"
+                (ngModelChange)="newPassword.set($event)">
+              <button
+                type="button"
+                class="visibility-button"
+                [attr.aria-label]="showNewPassword() ? 'Hide passwords' : 'Show passwords'"
+                (click)="showNewPassword.set(!showNewPassword())">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                  @if (showNewPassword()) {
+                    <path d="M3 3l18 18"></path>
+                  }
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group confirm-password-group">
+            <label for="confirmPassword">Confirm New Password</label>
+            <input
+              id="confirmPassword"
+              name="confirmPassword"
+              [type]="showNewPassword() ? 'text' : 'password'"
+              required
+              autocomplete="new-password"
+              [ngModel]="confirmPassword()"
+              (ngModelChange)="confirmPassword.set($event)">
+          </div>
+
+          <div class="password-requirements">
+            <p [class.valid]="passwordRules().length">• At least 8 characters</p>
+            <p [class.valid]="passwordRules().letters">• Uppercase and lowercase letters</p>
+            <p [class.valid]="passwordRules().number">• At least one number</p>
+          </div>
+
+          <button
+            type="submit"
+            class="primary-button"
+            [disabled]="changingPassword()">
+            {{ changingPassword() ? 'Updating...' : 'Update Password' }}
+          </button>
+        </form>
+      </div>
+    }
+
+    @if (activeTab() === 'account') {
+      <div class="profile-card">
+        <h2>Account Settings</h2>
+        <p class="subtitle">Manage your account</p>
+
+        <div class="danger-zone">
+          <h3>Danger Zone</h3>
+          <p>Once you delete your account, there is no going back. Please be certain.</p>
+
+          @if (!confirmDelete()) {
+            <button
+              type="button"
+              class="danger-button"
+              (click)="confirmDelete.set(true)">
+              Delete My Account
+            </button>
+          } @else {
+            <div class="delete-confirmation">
+              <p>Are you sure you want to permanently delete your account?</p>
+
+              <div class="confirmation-buttons">
+                <button
+                  type="button"
+                  class="secondary-button"
+                  (click)="confirmDelete.set(false)">
+                  Cancel
+                </button>
+
+                <button
+                  type="button"
+                  class="danger-button"
+                  [disabled]="deleting()"
+                  (click)="deleteAccount()">
+                  {{ deleting() ? 'Deleting...' : 'Yes, Delete My Account' }}
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</section>

@@ -1,0 +1,110 @@
+.header {
+  height: 65px;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid #e5e5e5;
+  box-sizing: border-box;
+}
+.header .header-container {
+  max-width: 1370px;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header .header-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.header .logo {
+  color: #ff6933;
+  font-size: 22px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.header nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+.header nav a {
+  color: #222;
+  font-size: 14px;
+  text-decoration: none;
+}
+.header nav a:hover {
+  color: #ff6933;
+}
+.header .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.header .header-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #222;
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.header .header-actions .cart {
+  color: black;
+}
+.header .header-actions .cart svg {
+  width: 24px;
+  height: 24px;
+}
+.header .header-actions .signup {
+  background: #ff6933;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+}
+.header .header-actions .signup:hover {
+  background: #eb5726;
+}
+.header .header-actions .profile {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: #ff6933;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.header .header-actions .profile svg {
+  width: 24px;
+  height: 24px;
+}
+.header .header-actions .profile:hover {
+  background: #eb5726;
+}
+
+@media (max-width: 1420px) {
+  .header .header-container {
+    padding: 0 24px;
+  }
+}
+@media (max-width: 600px) {
+  .header {
+    height: auto;
+    padding: 12px 0;
+  }
+  .header .header-container {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .header .header-actions {
+    gap: 16px;
+  }
+}/*# sourceMappingURL=header.css.map */

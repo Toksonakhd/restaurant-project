@@ -1,0 +1,185 @@
+
+<div class="product-details">
+  @if (loading()) {
+    <p class="status">Loading product...</p>
+  } @else if (error()) {
+    <p class="status">{{ error() }}</p>
+  } @else if (product(); as item) {
+    <div class="product-container">
+      <div class="product-image">
+        <img [src]="item.image" [alt]="item.name">
+      </div>
+
+      <div class="product-info">
+        <h1>{{ item.name }}</h1>
+
+        <div class="rating">
+          <div class="stars">
+            @for (star of [1, 2, 3, 4, 5]; track star) {
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                [attr.fill]="star <= item.rate ? '#F7931E' : 'none'"
+                [attr.stroke]="star <= item.rate ? '#F7931E' : '#CBD5E1'"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true">
+                <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.163.75a.53.53 0 0 1 .294.904l-3.736 3.641a2.12 2.12 0 0 0-.61 1.878l.882 5.14a.53.53 0 0 1-.769.558L12.98 18.57a2.12 2.12 0 0 0-1.973 0l-4.618 2.428a.53.53 0 0 1-.769-.558l.882-5.14a2.12 2.12 0 0 0-.61-1.878L2.156 9.788a.53.53 0 0 1 .294-.904l5.163-.75a2.12 2.12 0 0 0 1.595-1.16z"/>
+              </svg>
+            }
+          </div>
+
+          <span class="rating-text">
+            ({{ item.rate.toFixed(1) }} rating)
+          </span>
+        </div>
+
+        <p class="price">${{ item.price.toFixed(2) }}</p>
+
+        @if (item.vegetarian) {
+          <span class="vegetarian-badge">♧ Vegetarian</span>
+        }
+
+        <p class="description">{{ item.description }}</p>
+
+        @if (item.ingredients?.length) {
+          <div class="ingredients">
+            <h3>Ingredients:</h3>
+
+            <div class="ingredients-list">
+              @for (ingredient of item.ingredients; track $index) {
+                <div class="ingredient">
+                  <span class="ingredient-dot"></span>
+                  <span>{{ ingredient }}</span>
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        @if (item.method) {
+          <div class="preparation">
+            <h3>Preparation Method:</h3>
+            <p>{{ item.method }}</p>
+          </div>
+        }
+
+        <div class="quantity">
+          <button
+            type="button"
+            (click)="decreaseQuantity()">
+            −
+          </button>
+
+          <span>{{ quantity() }}</span>
+
+          <button
+            type="button"
+            (click)="increaseQuantity()">
+            +
+          </button>
+        </div>
+
+        <button
+          type="button"
+          class="add-to-cart"
+          [disabled]="addingToCart()"
+          (click)="addToCart(item.id, quantity())">
+          {{ addingToCart() ? 'Adding...' : 'Add to Cart' }}
+        </button>
+      </div>
+    </div>
+
+    <section class="recommendations">
+      <h2>You May Also Like</h2>
+
+      @if (recommendationsLoading()) {
+        <p>Loading recommendations...</p>
+      } @else if (recommendationsError()) {
+        <p>{{ recommendationsError() }}</p>
+      } @else {
+        <div class="recommendation-grid">
+          @for (recommended of recommendations(); track recommended.id) {
+            <div
+              class="recommendation-card"
+              role="link"
+              tabindex="0"
+              (click)="openProduct(recommended.id)"
+              (keydown.enter)="openProduct(recommended.id)">
+
+              <div class="recommendation-image">
+                <img
+                  [src]="recommended.image"
+                  [alt]="recommended.name">
+              </div>
+
+              <div class="recommendation-content">
+                <h3>{{ recommended.name }}</h3>
+
+                <p class="recommendation-description">
+                  {{ recommended.description }}
+                </p>
+
+                <div class="recommendation-rating">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="#F7931E"
+                    stroke="#F7931E"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true">
+                    <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.163.75a.53.53 0 0 1 .294.904l-3.736 3.641a2.12 2.12 0 0 0-.61 1.878l.882 5.14a.53.53 0 0 1-.769.558L12.98 18.57a2.12 2.12 0 0 0-1.973 0l-4.618 2.428a.53.53 0 0 1 .294.904l-3.736 3.641a2.12 2.12 0 0 0-.61 1.878l.882 5.14a.53.53 0 0 1-.769.558L12.98 18.57a2.12 2.12 0 0 0-1.973 0l-4.618 2.428a.53.53 0 0 1-.769-.558l.882-5.14a2.12 2.12 0 0 0-.61-1.878L2.156 9.788a.53.53 0 0 1 .294-.904l5.163-.75a2.12 2.12 0 0 0 1.595-1.16z"/>
+                  </svg>
+
+                  <span>{{ recommended.rate.toFixed(1) }}</span>
+                </div>
+
+                <p class="recommendation-price">
+                  ${{ recommended.price.toFixed(2) }}
+                </p>
+
+                <div class="recommendation-footer">
+                  <button
+                    type="button"
+                    class="recommendation-cart"
+                    [disabled]="addingToCart()"
+                    (click)="$event.stopPropagation(); addToCart(recommended.id)">
+                    {{ addingToCart() ? 'Adding...' : 'Add to Cart' }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </section>
+  }
+</div>
+
+@if (toastVisible()) {
+  <div class="cart-toast" role="status">
+    <button
+      type="button"
+      class="toast-close"
+      aria-label="Close notification"
+      (click)="closeToast()">
+      ×
+    </button>
+
+    <div class="toast-icon">
+      {{ toastTitle() === 'Added to cart' ? '✓' : '!' }}
+    </div>
+
+    <div class="toast-content">
+      <strong>{{ toastTitle() }}</strong>
+      <p>{{ toastMessage() }}</p>
+    </div>
+  </div>
+}

@@ -1,0 +1,150 @@
+
+@if (showWelcome()) {
+  <div class="welcome-toast">
+    <div class="welcome-icon">✓</div>
+
+    <div class="welcome-content">
+      <strong>Welcome back!</strong>
+      <p>You have successfully logged in</p>
+    </div>
+
+    <button
+      type="button"
+      class="welcome-close"
+      (click)="closeWelcome()"
+      aria-label="Close notification"
+    >
+      ×
+    </button>
+  </div>
+}
+
+@if (showAdded()) {
+  <div class="welcome-toast">
+    <div class="welcome-icon">✓</div>
+
+    <div class="welcome-content">
+      <strong>Added to cart</strong>
+      <p>Product has been added to your cart</p>
+    </div>
+
+    <button
+      type="button"
+      class="welcome-close"
+      (click)="closeAdded()"
+      aria-label="Close notification"
+    >
+      ×
+    </button>
+  </div>
+}
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>Delicious Food Delivered to Your Door</h1>
+    <p>Fresh ingredients, authentic flavors, fast delivery</p>
+    <a routerLink="/menu" class="order-btn">Order Now</a>
+  </div>
+</section>
+
+<section class="popular" id="popular">
+  <h2>Popular Dishes</h2>
+
+  @if (productService.loading()) {
+    <p class="message">Loading products...</p>
+  } @else if (productService.error()) {
+    <p class="message">{{ productService.error() }}</p>
+  } @else {
+    <div class="products">
+      @for (product of productService.popularProducts(); track product.id) {
+        <div
+          class="product-card"
+          role="link"
+          tabindex="0"
+          [attr.aria-label]="'View details for ' + product.name"
+          (click)="openProduct(product.id)"
+          (keydown.enter)="openProduct(product.id)"
+          (keydown.space)="$event.preventDefault(); openProduct(product.id)"
+        >
+          <div class="product-image">
+            <img [src]="product.image" [alt]="product.name">
+          </div>
+
+          <div class="product-info">
+            <h3>{{ product.name }}</h3>
+
+            <p class="description">
+              {{ product.description }}
+            </p>
+
+            <div class="rating">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="#F7931E"
+                stroke="#F7931E"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.163.75a.53.53 0 0 1 .294.904l-3.736 3.641a2.12 2.12 0 0 0-.61 1.878l.882 5.14a.53.53 0 0 1-.769.558L12.98 18.57a2.12 2.12 0 0 0-1.973 0l-4.618 2.428a.53.53 0 0 1-.769-.558l.882-5.14a2.12 2.12 0 0 0-.61-1.878L2.156 9.788a.53.53 0 0 1 .294-.904l5.163-.75a2.12 2.12 0 0 0 1.595-1.16z"/>
+              </svg>
+
+              <span>{{ product.rate.toFixed(1) }}</span>
+            </div>
+
+            <p class="price">
+              ${{ product.price.toFixed(2) }}
+            </p>
+
+            <div class="card-footer">
+              <button
+                type="button"
+                class="cart-btn"
+                [disabled]="addingProductId() !== null"
+                (click)="addToCart(product.id, $event)"
+              >
+                {{ addingProductId() === product.id ? 'Adding...' : 'Add to Cart' }}
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</section>
+
+<section class="our-story">
+  <div class="story-container">
+    <div class="story-image">
+      <img
+        src="https://restaurant.stepacademy.ge/restaurant-kitchen-chef-cooking.jpg"
+        alt="Chef preparing food"
+      >
+    </div>
+
+    <div class="story-content">
+      <h2>Our Story</h2>
+
+      <p>
+        At Foodie, we believe that great food brings people together.
+        Our chefs use only the freshest ingredients to create dishes
+        that delight your taste buds and warm your heart.
+      </p>
+
+      <p>
+        From traditional recipes passed down through generations to
+        innovative modern cuisine, every dish is crafted with passion
+        and care. We're committed to delivering not just meals, but
+        memorable dining experiences right to your door.
+      </p>
+
+      <a routerLink="/menu" class="story-btn">
+        Explore Our Menu
+      </a>
+    </div>
+  </div>
+</section>

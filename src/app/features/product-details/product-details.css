@@ -1,0 +1,385 @@
+.product-details {
+  min-height: 75vh;
+  padding: 32px 24px 80px;
+  background: #fff;
+}
+
+.product-container {
+  max-width: 1420px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.product-image {
+  width: 100%;
+  height: 540px;
+  border-radius: 9px;
+  overflow: hidden;
+}
+.product-image img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  display: block;
+}
+
+.product-info h1 {
+  margin: 0 0 16px;
+  font-size: 36px;
+  font-weight: 700;
+  color: #111;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  min-height: 24px;
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 24px;
+}
+.stars svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.rating-text {
+  font-size: 13px;
+  line-height: 20px;
+  color: #777;
+}
+
+.price {
+  margin: 0 0 24px;
+  font-size: 34px;
+  font-weight: 700;
+  color: #ff6333;
+}
+
+.vegetarian-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: #4caf50;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.description {
+  margin: 28px 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #777;
+}
+
+.ingredients {
+  margin-bottom: 26px;
+}
+.ingredients h3 {
+  margin: 0 0 16px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #111;
+}
+
+.ingredients-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.ingredient {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #111;
+}
+
+.ingredient-dot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  margin-top: 6px;
+  border-radius: 50%;
+  background: #ff6333;
+}
+
+.preparation {
+  margin-bottom: 24px;
+}
+.preparation h3 {
+  margin: 0 0 16px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #111;
+}
+.preparation p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #777;
+}
+
+.quantity {
+  display: flex;
+  align-items: center;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 38px;
+  margin-bottom: 24px;
+  border: 1px solid #e5e5e5;
+  border-radius: 9px;
+  overflow: hidden;
+}
+.quantity button {
+  width: 40px;
+  height: 100%;
+  border: none;
+  background: #fff;
+  color: #222;
+  font-size: 19px;
+  cursor: pointer;
+}
+.quantity button:hover {
+  background: #f5f5f5;
+}
+.quantity span {
+  min-width: 40px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.add-to-cart {
+  display: block;
+  width: 100%;
+  height: 40px;
+  border: none;
+  border-radius: 7px;
+  background: #ff6333;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.add-to-cart:hover {
+  background: #ed5123;
+}
+
+.status {
+  padding: 100px 20px;
+  text-align: center;
+  font-size: 18px;
+  color: #777;
+}
+
+@media (max-width: 768px) {
+  .product-details {
+    padding: 24px 16px 60px;
+  }
+  .product-container {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .product-image {
+    height: 320px;
+  }
+  .product-info h1 {
+    font-size: 28px;
+  }
+  .ingredients-list {
+    grid-template-columns: 1fr;
+  }
+}
+.recommendations {
+  max-width: 1420px;
+  margin: 60px auto 0;
+}
+.recommendations h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 30px;
+  color: #111;
+}
+
+.recommendation-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  width: 100%;
+  max-width: none;
+}
+
+.recommendation-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 440px;
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.recommendation-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.13);
+}
+
+.recommendation-image {
+  height: 195px;
+  overflow: hidden;
+}
+.recommendation-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.recommendation-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 16px;
+}
+.recommendation-content h3 {
+  margin: 8px 0 12px;
+  font-size: 16px;
+  color: #111;
+}
+
+.recommendation-description {
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #666;
+}
+
+.recommendation-rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.recommendation-price {
+  margin: 0;
+  color: #ff6333;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.recommendation-footer {
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+.recommendation-cart {
+  width: 100%;
+  padding: 10px;
+  background: #ff6333;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.recommendation-cart:hover {
+  background: #ed5123;
+}
+
+@media (max-width: 768px) {
+  .recommendation-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 550px) {
+  .recommendation-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.cart-toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 340px;
+  max-width: calc(100vw - 32px);
+  padding: 18px 20px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 9px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  animation: toastSlideDown 0.35s ease-out;
+}
+
+.toast-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #222;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.toast-content strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 13px;
+  color: #111;
+}
+.toast-content p {
+  margin: 0;
+  font-size: 12px;
+  color: #666;
+}
+
+.toast-close {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #e5e5e5;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+}
+
+@keyframes toastSlideDown {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -25px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}/*# sourceMappingURL=product-details.css.map */

@@ -1,0 +1,136 @@
+
+.footer {
+  background: #f9fafb;
+  border-top: 1px solid #e5e5e5;
+  padding: 48px 20px 32px;
+  font-family: Arial, sans-serif;
+
+  .footer-container {
+    max-width: 1468px;
+    margin: 0 auto;
+  }
+
+  .footer-columns {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 32px;
+    margin-bottom: 32px;
+  }
+
+  .footer-section {
+    h3 {
+      color: #111;
+      font-size: 16px;
+      font-weight: 700;
+      margin: 0 0 20px;
+    }
+
+    .footer-logo {
+      color: #ff6b35;
+      font-size: 18px;
+    }
+
+    p {
+      color: #6b7280;
+      font-size: 14px;
+      line-height: 1.5;
+      margin: 0 0 8px;
+    }
+
+    > a {
+      display: block;
+      color: #6b7280;
+      font-size: 14px;
+      text-decoration: none;
+      margin-bottom: 12px;
+
+      &:hover {
+        color: #ff6b35;
+      }
+    }
+  }
+
+  .social-links {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+
+    a {
+      color: #777;
+      display: inline-flex;
+
+      &:hover {
+        color: #ff6b35;
+      }
+    }
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  .newsletter {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+
+    input {
+      min-width: 0;
+      flex: 1;
+      height: 36px;
+      padding: 0 12px;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      background: #f3f4f6;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background: #ff6b35;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0 16px;
+      height: 36px;
+      font-size: 14px;
+      cursor: pointer;
+
+      &:hover {
+        background: #eb5726;
+      }
+    }
+  }
+
+  .footer-bottom {
+    border-top: 1px solid #e5e5e5;
+    padding-top: 32px;
+    text-align: center;
+    font-size: 16px;
+
+    strong {
+      color: black;
+      text-decoration: underline;
+    }
+
+    a {
+      color: #ff6b35;
+      font-weight: 700;
+      text-decoration: underline;
+      margin-left: 4px;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .footer .footer-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .footer .footer-columns {
+    grid-template-columns: 1fr;
+  }
+}

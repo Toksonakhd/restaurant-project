@@ -1,0 +1,60 @@
+
+<section class="verify-page">
+  <div class="verify-card">
+    <h1>Verify Your Email</h1>
+
+    <p class="subtitle">
+      We sent a 6-digit code to
+      <strong>{{ email || 'your email' }}</strong>
+    </p>
+
+    <form (ngSubmit)="verify()">
+      <div class="field">
+        <label for="code">Verification Code</label>
+
+        <input
+          id="code"
+          type="text"
+          name="code"
+          [(ngModel)]="code"
+          placeholder="Enter 6-digit code"
+          maxlength="6"
+          inputmode="numeric"
+          autocomplete="one-time-code"
+          required
+        >
+      </div>
+
+      @if (errorMessage()) {
+        <p class="error-message">{{ errorMessage() }}</p>
+      }
+@if (successMessage()) {
+  <p class="success-message">{{ successMessage() }}</p>
+}
+      <button
+        type="submit"
+        class="verify-btn"
+        [disabled]="!validCode || loading()"
+      >
+        {{ loading() ? 'Verifying...' : 'Verify' }}
+      </button>
+    </form>
+
+    <div class="resend-row">
+      <span>Didn't receive the code?</span>
+
+      <button
+        type="button"
+        class="resend-btn"
+        (click)="resendCode()"
+        [disabled]="loading()"
+      >
+        Resend Code
+      </button>
+    </div>
+
+    <a routerLink="/login" class="back-login">
+      Back to Login
+    </a>
+  </div>
+</section>
